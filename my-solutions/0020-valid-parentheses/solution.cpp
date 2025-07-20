@@ -1,32 +1,37 @@
-#include <iostream>
-#include <stack>
-#include <unordered_map>
-
 class Solution {
 public:
-    bool isValid(std::string s) {
-        std::stack<char> brackets;
-        std::unordered_map<char, char> bracketPairs = {
-            {')', '('},
-            {'}', '{'},
-            {']', '['}
-        };
+    bool isValid(string s) {
+        int n = s.length();
+        stack<char> a;
 
-        for (char c : s) {
-            if (bracketPairs.find(c) != bracketPairs.end()) {
-                // Current character is a closing bracket
-                char topElement = brackets.empty() ? '#' : brackets.top();
-                brackets.pop();
-                if (topElement != bracketPairs[c]) {
+        for (int i = 0; i < n; i++) {
+            if (s[i] == '(' || s[i] == '{' || s[i] == '[') {
+                a.push(s[i]);
+            }
+            if (s[i] == ')') {
+                if (!a.empty() && a.top() == '(') {
+                    a.pop();
+                } else {
                     return false;
                 }
-            } else {
-                // Current character is an opening bracket
-                brackets.push(c);
+            }
+            if (s[i] == '}') {
+                if (!a.empty() && a.top() == '{') {
+                    a.pop();
+                } else {
+                    return false;
+                }
+            }
+            if (s[i] == ']') {
+                if (!a.empty() && a.top() == '[') {
+                    a.pop();
+                } else {
+                    return false;
+                }
             }
         }
 
-        // The string is valid if the stack is empty at the end
-        return brackets.empty();
+        return a.size() == 0;
     }
 };
+
