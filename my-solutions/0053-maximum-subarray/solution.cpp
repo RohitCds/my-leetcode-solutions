@@ -1,17 +1,14 @@
-//for a time complexity wise optimised approach we will be using kadane's algorithm
-
 class Solution {
 public:
-    int maxSubArray(std::vector<int>& arr) {
-        int n = arr.size();
-        int currentsum=arr[0];
-        int maxsum = arr[0];
-        for(int i = 1; i<n; i++){
-            currentsum = max(currentsum+arr[i], arr[i]);
-            maxsum = max(currentsum, maxsum);
+    int maxSubArray(vector<int>& nums) {
+        int n = nums.size();
+        int maxi = nums[0];
+        int sum = 0;
+        for (int i = 0; i<n; i++){
+            sum+=nums[i];
+            maxi=max(maxi,sum);
+            if(sum<0){ sum = 0;}
         }
-        return maxsum;
+        return maxi;
     }
-
 };
-
